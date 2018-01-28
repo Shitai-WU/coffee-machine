@@ -22,6 +22,11 @@ public class Amount {
         return new Amount(difference);
     }
 
+    public Amount addAmount(Amount another) {
+        BigDecimal sum = value.add(another.getValue());
+        return new Amount(sum);
+    }
+
     public boolean isAmountInsuffient(Amount another) {
         return value.compareTo(another.getValue()) < 0;
     }
@@ -29,5 +34,20 @@ public class Amount {
     @Override
     public String toString() {
         return value.toString();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+
+        if (!(obj instanceof Amount)) {
+            return false;
+        }
+
+        Amount amount = (Amount) obj;
+
+        return value.compareTo(amount.getValue()) == 0;
     }
 }

@@ -1,3 +1,4 @@
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
@@ -7,6 +8,11 @@ import static org.junit.Assert.*;
 public class CommandTest {
     public static final Amount SUFFICIENT_AMOUNT = Amount.fromString("1");
     public static final Amount INSUFFICIENT_AMOUNT = Amount.fromString("0.2");
+
+    @Before
+    public void resetCommandsHistory() {
+        Command.resetCommandsHistory();
+    }
 
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
