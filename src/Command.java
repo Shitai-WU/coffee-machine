@@ -1,37 +1,64 @@
 public class Command {
-    private String drinkType;
-    private int sugarNumber;
-    private int stickNumber;
+    private final DrinkType drinkType;
+    private final SweetnessLevel sweetnessLevel;
+    private final boolean hasStick;
     private String message;
 
-    public Command(String drinkType, int sugarNumber) {
+    public Command(DrinkType drinkType, SweetnessLevel sweetnessLevel) {
         this.drinkType = drinkType;
-        this.sugarNumber = sugarNumber;
-        this.stickNumber = sugarNumber > 0 ? 1 : 0;
+        this.sweetnessLevel = sweetnessLevel;
+        this.hasStick = sweetnessLevel != SweetnessLevel.SUGAR_FREE;
     }
 
-    public String getDrinkType() {
+    public enum DrinkType {
+        COFFEE("C", "coffee"),
+        TEA("T", "tea"),
+        CHOCOLATE("H", "chocolate");
+
+        private final String code;
+        private final String name;
+
+
+        DrinkType(String code, String name) {
+            this.code = code;
+            this.name = name;
+        }
+
+        public String getCode() {
+            return code;
+        }
+
+        public String getName() {
+            return name;
+        }
+    }
+
+    public enum SweetnessLevel {
+        REGULAR_SUGAR(2),
+        HALF_SUGAR(1),
+        SUGAR_FREE(0);
+
+        private final int sugarNumber;
+
+        SweetnessLevel(int sugarNumber) {
+            this.sugarNumber = sugarNumber;
+        }
+
+        public int getSugarNumber() {
+            return sugarNumber;
+        }
+    }
+
+    public DrinkType getDrinkType() {
         return drinkType;
     }
 
-    public void setDrinkType(String drinkType) {
-        this.drinkType = drinkType;
+    public SweetnessLevel getSweetnessLevel() {
+        return sweetnessLevel;
     }
 
-    public int getSugarNumber() {
-        return sugarNumber;
-    }
-
-    public void setSugarNumber(int sugarNumber) {
-        this.sugarNumber = sugarNumber;
-    }
-
-    public int getStickNumber() {
-        return stickNumber;
-    }
-
-    public void setStickNumber(int stickNumber) {
-        this.stickNumber = stickNumber;
+    public boolean hasStick() {
+        return hasStick;
     }
 
     public String getMessage() {
