@@ -2,13 +2,14 @@ public class Command {
     private final DrinkType drinkType;
     private final SweetnessLevel sweetnessLevel;
     private final boolean hasStick;
+    private Amount amount;
     private String message = "";
-    private float paidAmount;
 
     public Command(DrinkType drinkType, SweetnessLevel sweetnessLevel) {
         this.drinkType = drinkType;
         this.sweetnessLevel = sweetnessLevel;
         this.hasStick = sweetnessLevel != SweetnessLevel.SUGAR_FREE;
+        this.amount = Amount.fromString(drinkType.getPrice());
     }
 
     public DrinkType getDrinkType() {
@@ -31,15 +32,9 @@ public class Command {
         this.message = message;
     }
 
-    public float getPaidAmount() {
-        return paidAmount;
-    }
-
-    public void setPaidAmount(float paidAmount) {
-        this.paidAmount = paidAmount;
-        if(this.paidAmount < drinkType.getPrice()) {
-            float missingAmount = drinkType.getPrice() - this.paidAmount;
-            message = "Amount insufficient : " + missingAmount + "missing";
-        }
+    public void pay(Amount paidAmount) {
+        if(paidAmount.isAmountInsuffient(amount)) {
+            message = "Amount insufficient : " + amount.calculateDifference(paidAmount).toString() + " missing";
+        };
     }
 }

@@ -19,19 +19,33 @@ public class CommandTest {
 
     @Test
     public void shouldSendMessageWithInsufficientAmountWhenNotEnoughMoneyProvided() {
+        Amount paidAmount = Amount.fromString("0.5");
+        String expectedDifference = "0.10";
         Command command = new Command(DrinkType.COFFEE, SweetnessLevel.SUGAR_FREE);
 
-        command.setPaidAmount(0.5f);
+        command.pay(paidAmount);
 
-        assertTrue(command.getMessage().contains("0.1"));
+        assertFalse(command.getMessage().isEmpty());
+        assertTrue(command.getMessage().contains(expectedDifference));
     }
 
     @Test
     public void shouldNotSendMessageWithSufficientAmountWhenEnoughMoneyProvided() {
+        Amount paidAmount = Amount.fromString("0.6");
         Command command = new Command(DrinkType.COFFEE, SweetnessLevel.SUGAR_FREE);
 
-        command.setPaidAmount(0.6f);
+        command.pay(paidAmount);
 
-        assertEquals("", command.getMessage());
+        assertTrue(command.getMessage().isEmpty());
+    }
+
+    @Test
+    public void shouldNotSendMessageWithSufficientAmountWhenMoreMoneyProvided() {
+        Amount paidAmount = Amount.fromString("0.8");
+        Command command = new Command(DrinkType.COFFEE, SweetnessLevel.SUGAR_FREE);
+
+        command.pay(paidAmount);
+
+        assertTrue(command.getMessage().isEmpty());
     }
 }
