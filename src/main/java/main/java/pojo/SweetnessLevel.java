@@ -1,4 +1,4 @@
-package main.java;
+package main.java.pojo;
 
 public enum SweetnessLevel {
     REGULAR_SUGAR(2),

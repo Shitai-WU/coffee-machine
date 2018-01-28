@@ -1,4 +1,4 @@
-package main.java;
+package main.java.pojo;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;

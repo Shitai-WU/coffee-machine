@@ -1,4 +1,4 @@
-package main.java;
+package main.java.pojo;
 
 public enum DrinkType {
     COFFEE("C", "coffee", "0.6", TemperatureLevel.HOT),
@@ -15,7 +15,7 @@ public enum DrinkType {
     private final TemperatureLevel temperatureLevel;
 
     enum TemperatureLevel {
-        COLD, HOT, EXTRA_HOT;
+        COLD, HOT, EXTRA_HOT
     }
 
     DrinkType(String code, String name, String price, TemperatureLevel temperatureLevel) {
