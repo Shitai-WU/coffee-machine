@@ -5,6 +5,9 @@ import org.junit.rules.ExpectedException;
 import static org.junit.Assert.*;
 
 public class CommandTest {
+    public static final Amount SUFFICIENT_AMOUNT = Amount.fromString("1");
+    public static final Amount INSUFFICIENT_AMOUNT = Amount.fromString("0.2");
+
     @Rule
     public ExpectedException expectedEx = ExpectedException.none();
 
@@ -121,5 +124,66 @@ public class CommandTest {
         assertFalse(command.isExtraHot());
     }
 
+    @Test
+    public void shouldReturnRightCommandsNumberWhenAllBillsAreCheckedWithSuccess() {
+        Command coffee = new Command("C", 1);
+        Command tea = new Command("T", 1);
+        Command chocolate = new Command("H", 1);
+        Command orangeJuice = new Command("O", 1);
+        int expectSucessfulCommandsNumber = 4;
 
+        coffee.pay(SUFFICIENT_AMOUNT);
+        tea.pay(SUFFICIENT_AMOUNT);
+        chocolate.pay(SUFFICIENT_AMOUNT);
+        orangeJuice.pay(SUFFICIENT_AMOUNT);
+
+        assertEquals(expectSucessfulCommandsNumber, Command.getSucessfulCommandsNumber());
+    }
+
+    @Test
+    public void shouldReturnRightCommandsNumberWhenPartielBillsAreCheckedWithSuccess() {
+        Command coffee = new Command("C", 1);
+        Command tea = new Command("T", 1);
+        Command chocolate = new Command("H", 1);
+        Command orangeJuice = new Command("O", 1);
+        int expectSucessfulCommandsNumber = 2;
+
+        coffee.pay(INSUFFICIENT_AMOUNT);
+        tea.pay(SUFFICIENT_AMOUNT);
+        chocolate.pay(INSUFFICIENT_AMOUNT);
+        orangeJuice.pay(SUFFICIENT_AMOUNT);
+
+        assertEquals(expectSucessfulCommandsNumber, Command.getSucessfulCommandsNumber());
+    }
+
+    @Test
+    public void shouldReturnRightTotalAmountEarnedWhenAllBillsAreCheckedWithSuccess() {
+        Command coffee = new Command("C", 1);
+        Command tea = new Command("T", 1);
+        Command chocolate = new Command("H", 1);
+        Command orangeJuice = new Command("O", 1);
+        Amount expectTotalEarnedAmount = Amount.fromString("4");
+
+        coffee.pay(SUFFICIENT_AMOUNT);
+        tea.pay(SUFFICIENT_AMOUNT);
+        chocolate.pay(SUFFICIENT_AMOUNT);
+        orangeJuice.pay(SUFFICIENT_AMOUNT);
+
+        assertEquals(expectTotalEarnedAmount, Command.getTotalEarnedAmount());
+    }
+    @Test
+    public void shouldReturnRightTotalAmountEarnedWhenPartielBillsAreCheckedWithSuccess() {
+        Command coffee = new Command("C", 1);
+        Command tea = new Command("T", 1);
+        Command chocolate = new Command("H", 1);
+        Command orangeJuice = new Command("O", 1);
+        Amount expectTotalEarnedAmount = Amount.fromString("2");
+
+        coffee.pay(INSUFFICIENT_AMOUNT);
+        tea.pay(SUFFICIENT_AMOUNT);
+        chocolate.pay(INSUFFICIENT_AMOUNT);
+        orangeJuice.pay(SUFFICIENT_AMOUNT);
+
+        assertEquals(expectTotalEarnedAmount, Command.getTotalEarnedAmount());
+    }
 }

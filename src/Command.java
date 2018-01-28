@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class Command {
     private final DrinkType drinkType;
     private final SweetnessLevel sweetnessLevel;
@@ -5,6 +8,8 @@ public class Command {
     private Amount amount;
     private boolean isExtraHot;
     private String message = "";
+
+    private static List<Command> history = new ArrayList<>();
 
     public Command(String drinkTypeCode, int sugarNumber) {
         this.drinkType = DrinkType.findByCode(drinkTypeCode);
@@ -14,6 +19,13 @@ public class Command {
         this.isExtraHot = DrinkType.TemperatureLevel.EXTRA_HOT.equals(drinkType.getTemperatureLevel());
     }
 
+    public static int getSucessfulCommandsNumber() {
+        return 0;
+    }
+
+    public static Amount getTotalEarnedAmount() {
+        return Amount.fromString("0");
+    }
     public DrinkType getDrinkType() {
         return drinkType;
     }
