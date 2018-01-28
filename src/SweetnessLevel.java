@@ -9,6 +9,16 @@ public enum SweetnessLevel {
         this.sugarNumber = sugarNumber;
     }
 
+    public static SweetnessLevel findBySugarNumber(int sugarNumber) {
+        for (SweetnessLevel sweetnessLevel : values()) {
+            if(sweetnessLevel.getSugarNumber() == sugarNumber) {
+                return sweetnessLevel;
+            }
+        }
+
+        throw new IllegalArgumentException("Number of sugar asked is not allowed !");
+    }
+
     public int getSugarNumber() {
         return sugarNumber;
     }

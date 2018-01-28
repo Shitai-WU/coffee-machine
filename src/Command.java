@@ -3,13 +3,15 @@ public class Command {
     private final SweetnessLevel sweetnessLevel;
     private final boolean hasStick;
     private Amount amount;
+    private boolean isExtraHot;
     private String message = "";
 
-    public Command(DrinkType drinkType, SweetnessLevel sweetnessLevel) {
-        this.drinkType = drinkType;
-        this.sweetnessLevel = sweetnessLevel;
+    public Command(String drinkTypeCode, int sugarNumber) {
+        this.drinkType = DrinkType.findByCode(drinkTypeCode);
+        this.sweetnessLevel = SweetnessLevel.findBySugarNumber(sugarNumber);
         this.hasStick = sweetnessLevel != SweetnessLevel.SUGAR_FREE;
         this.amount = Amount.fromString(drinkType.getPrice());
+        this.isExtraHot = DrinkType.TemperatureLevel.EXTRA_HOT.equals(drinkType.getTemperatureLevel());
     }
 
     public DrinkType getDrinkType() {
@@ -36,5 +38,9 @@ public class Command {
         if(paidAmount.isAmountInsuffient(amount)) {
             message = "Amount insufficient : " + amount.calculateDifference(paidAmount).toString() + " missing";
         };
+    }
+
+    public boolean isExtraHot() {
+        return isExtraHot;
     }
 }
